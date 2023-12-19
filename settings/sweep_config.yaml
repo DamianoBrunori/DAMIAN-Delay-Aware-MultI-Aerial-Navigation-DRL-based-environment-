@@ -1,0 +1,17 @@
+# sample config defaults file
+program: main2.py
+method: grid
+metric:
+  name: best_score
+  goal: maximize
+parameters:
+  alpha:
+    values: [0.1, 0.4]
+  batch_size:
+    values: [16, 32]
+  epoch_duration:
+    values: [20, 21]
+early_terminate:
+  type: hyperband
+  max_iter: 2
+  s: 2

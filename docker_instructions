@@ -1,0 +1,60 @@
+# Inside the 'Docker' directory (containing the 'Dockerfile'), build the docker image 'dealyed_mdp' with TAG 'multiuav' (you can name it as you want, but mind that UpperCase letters are not allowed):  
+docker build -t delayed_mdp:multiuav .
+
+# Afterwards, in order to get the ID associated with this image, run the following command:
+docker images
+
+# Now, look at heading 'IMAGE ID' associated with 'delayed_mdp' to get the 'delayed_mdp_ID'.
+You can use the 'IMAGE_ID' to get a bash terminal inside the container previously built. You can also assign a name to the container during the run (in this case the assigned container name is 'drl_container'). Every change you will make to local files, will be not reflected into the container):
+docker run --name drl_container -it IMAGE_ID bash
+
+# To reflect the local changes into the docker container (while still getting a bash terminal in it) whenever you modify a local file, you need to run the following command
+# (Remember that if you want the container updated to the local changes made on the host side, you need to use this command everytime, otherwise it will be used the content of the first docker build):
+docker run -v $(pwd):$(pwd) -w $(pwd) -it IMAGE_ID bash
+
+# Now, you are ready to run from terminal the 'main.py' file with all the needed flag options (see the README file in the related GitHub page). 
+
+
+EXTRAs:
+
+# To save a directory in a Docker container into local host (Be sure to selcted the name of the correct container):
+docker cp container_name:/container_path_of_dir_to_copy /local_host_path_where_to_copy_the_container_dir # Note that the container_name is actually the container NAME and not the container ID 
+
+# Mount the content of 'host_path' into the 'container_path':
+-v 'host_path':'container_path'
+
+# Set 'd_path' as working directory inside the container:
+-w 'd_path' set 'd_path as working directory
+
+
+# You can run any built image without getting the related bash terminal:
+docker run -it IMAGE_ID bash
+
+# Show the latest created container (includes all states):
+docker ps -l
+
+# Show all containers:
+docker ps -a
+
+# Stop a container:
+docker stop CONTAINER_ID
+
+# Remove an image:
+docker rmi IMAGE_ID
+
+# Remove a container:
+docker rm CONTAINER_ID
+
+# Stop all the running containers:
+docker stop $(docker ps -aq)
+
+# Remove all containers:
+docker rm $(docker ps -aq)
+
+# Remove all images:
+docker rmi $(docker images -q)
+
+# Show docker disk usage (to check if and where you can free some disk space):
+docker system df
+
+   
