@@ -234,7 +234,6 @@ In particular, the following items are shown in the animation:
 ## Directory Tree 
 
 ```
-TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 ├── LICENSE
 ├── logs
 │   ├── scenario_run.txt
@@ -311,7 +310,7 @@ All the needed libraries are now ready to be used for running the code. For more
 
 ## Run
 
-Different running modes are available[^1].
+Different running modes are available[^1]. Note that the modes not described in [References](#references) are not guaranteed to work as intended in all their variations. 
 
 ```
 usage: main.py [-h] [--train] [--test] [--no_learn] [--sweep] [--external_obs]
