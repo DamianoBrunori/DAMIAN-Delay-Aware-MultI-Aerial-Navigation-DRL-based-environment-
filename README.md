@@ -6,6 +6,7 @@
 - [Directory Tree](#directory-tree)
 - [Setup](#setup)
 - [Run](#run)
+- [References](#references)
 - [License](#license)
 - [Author Info](#author-info)
 
@@ -513,6 +514,10 @@ The snapshot here below shows an example of some of the features that it is poss
 <p align="center">
   <img src=Images/sweepW&B.png>
 </p>
+
+## References
+
+[Damiano Brunori and Luca Iocchi “A Delay-aware DRL-based Environment for Cooperative Multi-UAV Systems in Multi-purpose Scenarios”, ICAART 2024 16<sup>th</sup> International Conference on Agents and Artificial Intelligence, February 2024.](toappear)
 
 ## License
 
