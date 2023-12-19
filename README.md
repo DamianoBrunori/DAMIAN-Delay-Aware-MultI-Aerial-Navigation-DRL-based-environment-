@@ -1,5 +1,7 @@
 # DAMIAN (Delay-Aware MultI-Aerial Navigation) DRL-based Environment
 
+THE DESCRIPTION OF SOME POINTS NEEDS TO BE REVIEWED, CUT, MODIFIED OR EXTENDED (IT WILL BE DONE BY EARLY JANUARY)
+
 ### Table of Contents
 
 - [Description](#description)
