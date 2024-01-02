@@ -1,11 +1,11 @@
-# sample config defaults file
-program: main2.py
+# Sample config defaults file (this settings are set to be used with the PPO algorithm: to be changed to make it suitable for the SAC algorithm):
+program: main.py
 method: grid
 metric:
   name: best_score
   goal: maximize
 parameters:
-  alpha:
+  lr_ppo:
     values: [0.1, 0.4]
   batch_size:
     values: [16, 32]
