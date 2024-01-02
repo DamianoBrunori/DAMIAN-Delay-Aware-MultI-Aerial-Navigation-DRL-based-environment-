@@ -197,14 +197,14 @@ class TrainANDSweep:
 
         # Hyperparameters tuning case:
         if self.args.sweep:
+            import matplotlib
+            matplotlib.use('agg') # -> 'agg', is a non-interactive backend that can only write to files
             # Weight&Biases initialization:
             wandb.init()
             sweep_config = wandb.config
             sweep_params = list(sweep_config.keys())
             train_cfg_params = list(self.train_cfg.__dict__.keys())
             env_params = list(self.env.__dict__.keys())
-            # Compute how many hours need to elapse between a learning step and the next one: 
-            min_it_time_h = self.secmin2hours(time=int((self.env.dt*N)/time_scaling_factor))
             # Invalid sweep inputs check: 
             if 'epoch_duration' in sweep_params:
                 epoch_durations_to_test = sweep_cng_dict['parameters']['epoch_duration']
@@ -216,18 +216,18 @@ class TrainANDSweep:
                     epoch_durations_to_test = epoch_durations_to_test['values']
                     can_check = True
                 else:
-                    warnings.warn('\n\nNot fixed values have been using for "epoch duration" sweep parameter, thus it could cause an errror at run time since in this case it is not perform any check to ensure that the epoch duration [h] is not smaller than the minimum time needed between a learning step and the next one!\n\n')
+                    warnings.warn('\n\nNot fixed values have been using for "epoch duration" sweep parameter, thus it could cause an error at run time since in this case it is not perform any check to ensure that the epoch duration [h] is not smaller than the minimum time needed between a learning step and the next one!\n\n')
                     time.sleep(3)
                     can_check = False
 
                 if can_check:
                     for ep_dur in epoch_durations_to_test:
-                        assert ep_dur>=min_it_time_h, '\n\nFound "epoch duration" {} [h] too short among the ones selected for the sweep (check them all: {})! The epoch duration [h] must be larger enough to allow to start at least 1 iteration. Now the learning process runs every {} iterations, i.e., every {} [h]: thus either the epoch duration is set in such a way to be euqual or greater than {} or the number of learning iteration N is decreased\n\n'.format(ep_dur, epoch_durations_to_test, N, min_it_time_h, min_it_time_h)
+                        assert ep_dur>=N, '\n\nFound "epoch duration" {} too short among the ones selected for the sweep (check them all: {})! The epoch duration (in iterations) must be larger enough to allow to start at least 1 learning iteration. Now the learning process runs every {} iterations!'
             for sweep_prm_name in sweep_params:
-                assert (sweep_prm_name=='epoch_duration') or (sweep_prm_name in train_cfg_params), 'Invalid Sweep parameter {}! Select sweep paramters among the ones available in training.ini file (exept for the epoch time duration "epoch_duration [h]"): {}'.format(sweep_prm_name, train_cfg_params)
+                assert (sweep_prm_name=='epoch_duration') or (sweep_prm_name in train_cfg_params), 'Invalid Sweep parameter {}! Select sweep parameters among the ones available in training.ini file (exept for the epoch time duration "epoch_duration"): {}'.format(sweep_prm_name, train_cfg_params)
                 setattr(self.train_cfg, sweep_prm_name, sweep_config[sweep_prm_name])
                 if sweep_prm_name in env_params:
-                    setattr(self.env, sweep_prm_name, sweep_config[sweep_prm_name])            
+                    setattr(self.env, sweep_prm_name, sweep_config[sweep_prm_name])
 
             if self.env.persistent_task and 'n_episodes' in sweep_params:
                 assert False, '\n\nYou are trying to set a sweep set of values for the number of episodes for a persistent task: when the task is persistent the episode never ends and then you need to use the "epoch duration" instead as if it represented the episodes!\n\n'
@@ -380,11 +380,9 @@ class TrainANDSweep:
                         metric = {metric_name: metrics[metric_name]}
                         wandb.log(metric)
                         if 'epoch_duration' in sweep_params:
-                            # Convert the actual iteration time in hours (if needed): 
-                            actual_it_time_h = self.secmin2hours(time=actual_it_time)
                             # End the current epoch if the current actual iteration time is equal to the current one set in the sweep configuration file:
-                            if actual_it_time_h>=sweep_config.epoch_duration: # -> '>' is needed since 'sweep_config.epoch_duration' can be also a float value
-                                # metric is uploaded on wandb after and outside iteration while loop
+                            if it>=self.train_cfg.epoch_duration:
+                                # Metric is uploaded on wandb after and outside iteration while loop
                                 break
                 # Case in which the losses have not been computed yet:
                 else:
