@@ -1894,7 +1894,7 @@ class Environment(gym.Env):
                 [[cos(yaw) * cos(pitch), -sin(yaw) * cos(roll) + cos(yaw) * sin(pitch) * sin(roll), sin(yaw) * sin(roll) + cos(yaw) * sin(pitch) * cos(roll), x],
                  [sin(yaw) * cos(pitch), cos(yaw) * cos(roll) + sin(yaw) * sin(pitch)
                   * sin(roll), -cos(yaw) * sin(roll) + sin(yaw) * sin(pitch) * cos(roll), y],
-                 [-sin(pitch), cos(pitch) * sin(roll), cos(pitch) * cos(yaw), z]
+                 [-sin(pitch), cos(pitch) * sin(roll), cos(pitch) * cos(roll), z]
                  ])
 
         if self.viewer is None:
