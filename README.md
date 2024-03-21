@@ -517,7 +517,7 @@ The snapshot here below shows an example of some of the features that it is poss
 
 ## References
 
-[Damiano Brunori and Luca Iocchi “A Delay-aware DRL-based Environment for Cooperative Multi-UAV Systems in Multi-purpose Scenarios”, ICAART 2024 16<sup>th</sup> International Conference on Agents and Artificial Intelligence, February 2024.]([toappear](https://www.insticc.org/node/TechnicalProgram/icaart/2024/presentationDetails/123479))
+[Damiano Brunori and Luca Iocchi “A Delay-aware DRL-based Environment for Cooperative Multi-UAV Systems in Multi-purpose Scenarios”, ICAART 2024 16<sup>th</sup> International Conference on Agents and Artificial Intelligence, February 2024.](https://www.insticc.org/node/TechnicalProgram/icaart/2024/presentationDetails/123479)
 
 ## License
 
