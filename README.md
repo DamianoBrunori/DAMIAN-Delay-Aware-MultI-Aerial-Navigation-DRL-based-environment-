@@ -51,49 +51,56 @@ A detailed explanation of the meaning of each of the following parameters can be
 
 ```
 [Time Setting]
-  dt
-  unit_measure
+dt = 1
+unit_measure = s 
+explicit_clock = false
 
 [Operative Polygon]
-  min_area
-  max_area 
-  n_landing_points
-  w
-  step
-  deg 
-  polygon_discretization
+min_area = 100000
+max_area = 200000 
+same_env = false 
+n_landing_points = all
+step = 30
+deg = 45
 
 [UAVs]
-  n_uavs
-  same_initial_location
-  energy_constraint
-  max_speed
-  max_acc 
-  r
-  min_amplitude_thrs
-  p_eng
-  v_ref
-  p_bat
-  p_bat_charging
-  b_efficiency
-  b_res
-  min_tl
+n_uavs = 1
+min_fl = 1
+max_fl = 4
+sep_fl = 0.5
+sensing_time = 0
+same_initial_location = true
+uavs_locations = [(62.85586449489398, -119.21836454696785)]
+energy_constraint = false
+max_speed = 5
+max_acc = 2
+min_db_level = 105
+p_eng = 10
+v_ref = 20
+p_bat = 9
+p_bat_charging = 4
+b_efficiency = 12
+b_res = 5
+action_delay = false 
+observation_delay = true
+observation_loss = false 
 
 [Audio Source]
-  static 
-  constant
-  source_power
-  global_max_speed
-  global_max_acc
-  local_max_speed
-  local_max_acc
-  n_hotspots
-  n_p_min
-  n_p_max
-  local_d
+static = true
+constant = true 
+source_location = (51.48646156683597, 32.62646123452701)
+source_db_level = 140
+global_max_speed = 20
+global_max_acc = 2.5
+local_max_speed = 1.7 
+local_max_acc = 1.1
+n_hotspots = 10
+n_p_min = 3
+n_p_max = 7
+local_d = 50
 
 [Communication]
-  STAR
+STAR = t
 ```
 
 #### Training Parameters Setting
@@ -103,95 +110,102 @@ A detailed explanation of the meaning of each of the following parameters can be
 
 ```
 [System]
-  parameter_sharing 
-  action_space
-  action_delay
-  new_env_per_episode
-  observations 
-  actions
+CT_DE = false
+action_space = discrete
+action_delay = false
+actions_size = 3
+observation_delay = false
+observations = [
+		"current agent spotted the source"
+		] 
+actions = [
+	   "distance",
+	   "angle"
+	   ]
 
-[Hyperparameters]
-  alpha
-  gamma
-  gae_lambda
-  policy_clip
-  n_episodes
-  n_learning_episodes
-  batch_size
-  c_value
-  c_entropy
-  A_fc1_dims
-  A_fc2_dims
-  C_fc1_dims
-  C_fc2_dims
-  action_sigma
-  action_sigma_decay_rate
-  action_sigma_min
+[PPO Hyperparameters]
+lr = 0.0003
+gamma = 0.9
+gae_lambda = 0.85
+policy_clip = 0.2
+c_value = 0.5
+c_entropy = 0.01
+A_fc1_dims = 256
+A_fc2_dims = 256
+C_fc1_dims = 256
+C_fc2_dims = 256
+
+[SAC Hyperparameters]
+lr1 = 0.0003
+lr2 = 0.0003
+alpha = auto
+gamma = 0.99
+tau = 0.005
+reward_scale = 2
+A_fc1_dims = 256
+A_fc2_dims = 256
+C_fc1_dims = 256
+C_fc2_dims = 256
+V_fc1_dims = 256
+V_fc2_dims = 256
+
+[General Hyperparameters]
+batch_size = 5
+action_sigma = 0.6
+action_sigma_decay_rate = 0.05 
+action_sigma_min = 0.1
+n_episodes = 500
+N = 15
 
 [Terminal Conditions]
-  perc_uavs_detecting_the_source 
-  perc_uavs_discharged
-  task_ending
-  task_success
-  time_failure
-  battery_failure
+perc_uavs_detecting_the_source = 0.3
+perc_uavs_discharged = 0.60
+task_ending = false
+task_success = true
+time_failure = true
+battery_failure = false
 
 [Reward]
-  W_agent
-  W_system
-  Wa
-  Wb
-  Wc
-  Wd
-  We
-  Wf
-  Wg
-  Wh
-  Wi
-  Wl
-  Wm
-  Wn
+cumulative_reward = true
+cumulative_rew_size = 3
+W_agent = 1
+W_system = 1
+Wa = 1
+Wb = 1
+Wc = 1
+Wd = 1
+We = 1
+Wf = 1
+Wg = 1
+Wh = 1
+Wi = 1
+Wl = 1
+Wm = 1
+Wn = 1
 ```
 
 #### Hyperparamters Tuning Setting (Sweeping)
 
 The list of parameters listed here below represent what all that parameters on which it is possible to performe a tuning. here it is possible to assign a set o values (to each parameter) among which to perorm the tuning.
-A detailed explanation of the meaning of each of the following parameters can be found in settings/sweep_parameters.ini.
+A detailed explanation of the meaning and usage of each of the following parameters can be found in section _Visualize The Hyperparameters Tuning Charts Through Weights & Biases_ and in file settings/sweep_config.yaml.
 
 ```
-[Hyperparameters]
-  alpha
-  gamma
-  gae_lambda
-  policy_clip
-  n_episodes
-  n_learning_episodes
-  batch_size
-  c_value
-  c_entropy
-  A_fc1_dims
-  A_fc2_dims
-  C_fc1_dims
-  C_fc2_dims
-  action_sigma
-  action_sigma_decay_rate 
-  action_sigma_min
-
-[Reward]
-  W_agent
-  W_system
-  Wa
-  Wb
-  Wc
-  Wd
-  We
-  Wf
-  Wg
-  Wh
-  Wi
-  Wl
-  Wm
-  Wn
+program: main.py
+method: grid
+metric:
+  name: best_score
+  goal: maximize
+parameters:
+  lr_ppo:
+    values: [0.1, 0.4]
+  batch_size:
+    values: [16, 32]
+  epoch_duration:
+    values: [20, 21]
+early_terminate:
+  type: hyperband
+  max_iter: 2
+  s: 2
 ```
 
 ### Environment Generation
