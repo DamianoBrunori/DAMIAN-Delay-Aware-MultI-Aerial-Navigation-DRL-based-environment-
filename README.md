@@ -248,42 +248,38 @@ In particular, the following items are shown in the animation:
 
 ## Directory Tree 
 
+Here is represented the directory tree associated with this GitHub repository; the Images folder is not reported for the sake of brevity.
+
 ```
 ├── LICENSE
-├── logs
-│   ├── scenario_run.txt
-│   └── training_run.txt
 ├── main.py
 ├── models
 │   ├── PPO.py
+│   └── SAC.py
 ├── muavenv
 │   ├── definitions.py
 │   ├── env.py
 │   ├── global_vars.py
-│   ├── __init__.py
 │   ├── units.py
-│   ├── utils.py
-│   └── utilsWandB.py
+│   └── utils.py
 ├── parsers
 │   ├── external_info.py
 │   ├── scenario.py
-│   ├── sweeping.py
 │   └── training.py
 ├── README.md
 ├── requirements.txt
-├── runs
-│   ├── sweep
-│   │   └── ppo
-│   ├── test
-│   │   └── ppo
-│   ├── train
-│   │   └── ppo
+├── Dockerfile
+├── docker_instructions.txt
+├── requirements.yml
 ├── settings
 │   ├── scenario_parameters.ini
 │   ├── sweep_config.yaml
-│   ├── sweep_parameters.ini
 │   └── training_parameters.ini
 ├── setup.py
+├── MachinesCommunication
+|   ├── ExternalMachine
+|   |   └── client.py
+|   └── server.py
 ├── train_and_sweep.py
 ```
 
