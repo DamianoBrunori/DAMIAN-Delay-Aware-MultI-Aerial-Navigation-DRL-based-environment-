@@ -25,7 +25,7 @@ By enabling the 'action_delay', the effect of the performed actions can be seen 
 * landing time
 
 If this feature is not enabled, then actions take place instantaneously.
-In this latter case, the battery consumption (if enabled) will be still computed in the proper way: indeed it will consider the chosen resolution step (i.e., the smallest time step where UAVs can take an action) selected by the user and it will still depend on the three main flight phases previously listed. For what concerns the 'osberavation_delay', we still have a relevant variation during the leraning process, but the redenred animation will be the same: in particular, if 'action_delay' is not enabled, the animation will be shown in 2D, otherwise it will be shown in 3D.   
+In this latter case, the battery consumption (if enabled) will be still computed in the proper way: indeed it will consider the chosen resolution step (i.e., the smallest time step where UAVs can take an action) selected by the user and it will still depend on the three main flight phases previously listed. For what concerns the 'observation_delay', we still have a relevant variation during the learning process, but the rendered animation will be the same: in particular, if 'action_delay' is not enabled, the animation will be shown in 2D, otherwise it will be shown in 3D.   
 
 For more details about the scenario and training parameters configuration, see [Configuration](#configuration) section.
 
